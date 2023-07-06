@@ -29,7 +29,19 @@ def get_table_dataframe(table) -> pd.DataFrame:
     return df
 
 
-def get_forex_dict(df: pd.DataFrame) -> dict:
+def forex_dict() -> dict:
+    # Send a GET request to the website
+    url = "https://www.xm.com/forex-trading"
+    response = requests.get(url)
+
+    # Create a BeautifulSoup object to parse the HTML content
+    soup = BeautifulSoup(response.content, "html.parser")
+
+    # Find the table element using its HTML tag and any relevant attributes
+    table = soup.find("table")
+
+    # # Convert table to a pandas DataFrame
+    df = get_table_dataframe(table)
     return df.to_dict(orient="index")
 
 
